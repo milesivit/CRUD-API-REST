@@ -1,13 +1,14 @@
 import { Fragment, useState } from "react";
 
-const ObjectsView = ({ users, loading, error, setSearchObjects, addObjects, localObjects, handleUpdateQuote, deleteQuote }) => {
-    const [name, setName] = useState("");
+//todo lo q importo de objectsContainer
+const ObjectsView = ({ users, loading, error, setSearchObjects, addObjects, localObjects, UpdateQuote, deleteQuote }) => {
+    const [name, setName] = useState(""); //inputs del formulario
     const [features, setFeatures] = useState("");
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(""); //estados
     const [year, setYear] = useState("");
     const [showForm, setShowForm] = useState(false);
-    const [showLocalTable, setShowLocalTable] = useState(true);
-    const [editingId, setEditingId] = useState(null); // Nuevo estado
+    const [showLocalTable, setShowLocalTable] = useState(true); //mostrar tabla local o de api
+    const [editingId, setEditingId] = useState(null); //saber q estoy editando y q objeto
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,14 +23,14 @@ const ObjectsView = ({ users, loading, error, setSearchObjects, addObjects, loca
         };
 
         if (editingId) {
-            // Editar
-            handleUpdateQuote(editingId, newObject);
+            //edito
+            UpdateQuote(editingId, newObject);
         } else {
-            // Crear
+            //crear
             await addObjects(newObject);
         }
 
-        // Resetear
+        //todo vacio
         setName("");
         setFeatures("");
         setPrice("");
@@ -39,12 +40,12 @@ const ObjectsView = ({ users, loading, error, setSearchObjects, addObjects, loca
     };
 
     const handleEdit = (id) => {
-        const objToEdit = localObjects.find(obj => obj.id === id);
-        if (objToEdit) {
-            setName(objToEdit.name);
-            setFeatures(objToEdit.data?.features || "");
-            setPrice(objToEdit.data?.price || "");
-            setYear(objToEdit.data?.year || "");
+        const edit = localObjects.find(obj => obj.id === id);
+        if (edit) { //busco las variables para editar
+            setName(edit.name);
+            setFeatures(edit.data.features);
+            setPrice(edit.data.price);
+            setYear(edit.data.year);
             setEditingId(id);
             setShowForm(true);
             setShowLocalTable(true);
@@ -58,7 +59,7 @@ const ObjectsView = ({ users, loading, error, setSearchObjects, addObjects, loca
             <button onClick={() => {
                 setShowForm(!showForm);
                 setShowLocalTable(true);
-                setEditingId(null); // Resetear edición si se va a crear
+                setEditingId(null); //resetear edicion si se va a crear
                 setName("");
                 setFeatures("");
                 setPrice("");

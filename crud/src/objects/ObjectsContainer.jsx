@@ -57,7 +57,7 @@ const ObjectsContainer = () => {
         }
     };
 
-    const handleUpdateQuote = async (id, updatedObject) => {
+    const UpdateQuote = async (id, updatedObject) => {
         try {
             const response = await fetch(`https://api.restful-api.dev/objects/${id}`, {
                 method: "PUT",
@@ -133,7 +133,7 @@ const ObjectsContainer = () => {
             setSearchObjects={setSearchObjects}
             addObjects={addObjects}
             localObjects={localObjects}
-            handleUpdateQuote={handleUpdateQuote}
+            UpdateQuote={UpdateQuote}
             deleteQuote={deleteQuote}
         />
     );
